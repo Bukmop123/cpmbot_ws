@@ -1,0 +1,58 @@
+controller:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+  # Position Controllers ---------------------------------------
+  arm_front_left:
+    type: effort_controllers/JointPositionController
+    joint: arm_front_left_joint
+    pid: {p: 200.0, i: 1.00, d: 10.0}
+  arm_back_left:
+    type: effort_controllers/JointPositionController
+    joint: arm_back_left_joint
+    pid: {p: 200.0, i: 1.00, d: 10.0}
+  arm_front_right:
+    type: effort_controllers/JointPositionController
+    joint: arm_front_right_joint
+    pid: {p: 200.0, i: 1.00, d: 10.0}
+  arm_back_right:
+    type: effort_controllers/JointPositionController
+    joint: arm_back_right_joint
+    pid: {p: 200.0, i: 1.00, d: 10.0}
+  # Volocity Controllers ---------------------------------------
+  track_front_left:
+    type: effort_controllers/JointVelocityController
+    joint: track_front_left_joint
+#    pid: {p: 0.12, i: 1.96, d: 0.0, i_clamp: 0.0}
+    pid: {p: 1.5, i: 1.0, d: 0.0, i_clamp: 0.0}
+  track_back_left:
+    type: effort_controllers/JointVelocityController
+    joint: track_back_left_joint
+    pid: {p: 1.5, i: 1.0, d: 0.0, i_clamp: 0.0}
+  track_front_right:
+    type: effort_controllers/JointVelocityController
+    joint: track_front_right_joint
+    pid: {p: 1.5, i: 1.0, d: 0.0, i_clamp: 0.0}
+  track_back_right:
+    type: effort_controllers/JointVelocityController
+    joint: track_back_right_joint
+    pid: {p: 1.5, i: 1.0, d: 0.0, i_clamp: 0.0}
+  mecanum_front_left:
+    type: effort_controllers/JointVelocityController
+    joint: mecanum_front_left_joint
+    pid: {p: 1.5, i: 1.0, d: 0.0, i_clamp: 0.0}
+  mecanum_back_left:
+    type: effort_controllers/JointVelocityController
+    joint: mecanum_back_left_joint
+    pid: {p: 1.5, i: 1.0, d: 0.0, i_clamp: 10.0}
+  mecanum_front_right:
+    type: effort_controllers/JointVelocityController
+    joint: mecanum_front_right_joint
+    pid: {p: 1.5, i: 1.0, d: 0.0, i_clamp: 0.0}
+  mecanum_back_right:
+    type: effort_controllers/JointVelocityController
+    joint: mecanum_back_right_joint
+    pid: {p: 1.5, i: 1.0, d: 0.0, i_clamp: 0.0}
+
+

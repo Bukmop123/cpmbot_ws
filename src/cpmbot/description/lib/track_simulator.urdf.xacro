@@ -1,0 +1,33 @@
+<?xml version='1.0'?>
+
+<robot name="cpmbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:macro name="base_link_track_simulator" params="sizeXYZ originXYZ">
+    <collision name='caster1_collision'>
+      <origin xyz="${originXYZ}" rpy="0 0 0"/>
+      <geometry>
+         <box size="${sizeXYZ}"/>  
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0</mu>
+            <mu2>0</mu2>
+            <slip1>1.0</slip1>
+            <slip2>1.0</slip2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>
+
+    <visual name='caster1_visual'>
+      <origin xyz="${originXYZ}" rpy="0 0 0"/>
+      <geometry>
+       <box size="${sizeXYZ}"/> 
+      </geometry>
+      <material name="blue"/>
+    </visual>
+	
+	</xacro:macro>
+
+</robot>

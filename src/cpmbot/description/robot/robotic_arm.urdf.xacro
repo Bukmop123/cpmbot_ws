@@ -1,0 +1,75 @@
+<?xml version='1.0'?>
+
+<robot name="cpmbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:property name="brX" value="0.1"/>
+<xacro:property name="brY" value="0.1"/>
+<xacro:property name="brZ" value="0.5"/>
+<xacro:property name="prX" value="0.06"/>
+<xacro:property name="prY" value="0.06"/>
+<xacro:property name="prZ" value=".25"/>
+<xacro:property name="seX" value="0.03"/>
+<xacro:property name="seY" value="0.03"/>
+<xacro:property name="seZ" value="0.1"/>
+<xacro:property name="lanzaRadio" value="0.003"/>
+<xacro:property name="lanzaLongitud" value="0.25"/>
+
+<link name='base_brazo'>
+  <visual name='base_brazo_visual'>
+    <origin xyz="0 0 ${brZ/2}" rpy=" 0 0 0"/>
+      <geometry>
+        <box size="${brX} ${brY} ${brZ}"/>
+      </geometry>
+  </visual>
+  <material name="grey"/>
+</link>
+  <joint name="base_robot_joint" type="fixed">
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    <parent link="${base_link_name}"/>
+    <child link="base_brazo"/>
+  </joint>
+
+  <link name='primer_brazo'>
+  <visual name='base_brazo_visual'>
+    <origin xyz="0 0 ${prZ/2}" rpy=" 0 0 0"/>
+      <geometry>
+        <box size="${prX} ${prY} ${prZ}"/>
+      </geometry>
+  </visual>
+  <material name="grey"/>
+</link>
+  <joint name="primer_brazo_joint" type="fixed">
+    <origin xyz="0 0 ${brZ}" rpy="0 -1 0"/>
+    <parent link="base_brazo"/>
+    <child link="primer_brazo"/>
+  </joint>
+
+  <link name='segundo_brazo'>
+  <visual name='base_brazo_visual'>
+    <origin xyz="0 0 ${seZ/2}" rpy=" 0 0 0"/>
+      <geometry>
+        <box size="${seX} ${seY} ${seZ}"/>
+      </geometry>
+      <material name="grey"/>
+  </visual>
+</link>
+  <joint name="segundo_brazo_joint" type="fixed">
+    <origin xyz="0 0 ${prZ}" rpy="0 -1 0"/>
+    <parent link="primer_brazo"/>
+    <child link="segundo_brazo"/>
+  </joint>
+
+    <link name='lanza'>
+  <visual>
+    <origin xyz="0 0 ${lanzaLongitud/2}" rpy=" 0 0 0"/>
+      <geometry>
+        <cylinder radius="${lanzaRadio}" length="${lanzaLongitud}"/>
+      </geometry>
+      <material name="blue"/>
+  </visual>
+</link>
+  <joint name="lanza_joint" type="fixed">
+    <origin xyz="0 0 ${seZ}" rpy="0 -1 0"/>
+    <parent link="segundo_brazo"/>
+    <child link="lanza"/>
+  </joint>
+</robot>

@@ -1,0 +1,47 @@
+#operator node parameter
+#joystick axe and button numbers.
+# -1 == not activated
+topic:
+  subscriber:
+    joystick: joy
+  publisher:
+    basic_command: robot/basic/command
+joy:
+  axe:    
+    x: 1
+    y: 0
+    zrot: 2
+#front/back left/right must be activated together
+#to use axes for arm input
+    arm_front_left: -1
+    arm_front_right: -1
+    arm_back_left: -1
+    arm_back_right: -1
+  button:    
+    mecanum_movement_mode: -1
+    arm_position_mode: -1
+    arm_angle_reset: -1
+#front/back up/down must be activated together
+#AND "arm_activate_buttons" need to be "true"
+#to use buttons for arm input
+    arm_front_up: 6
+    arm_front_down: 8
+    arm_back_up: 7
+    arm_back_down: 9
+#operator parametes
+operator:
+  arm_activate_buttons: true    
+  mult:
+      x: 0.2
+      y: 0.2
+      zrot: 0.15
+      arm_front_left: -0.1
+      arm_front_right: -0.1
+      arm_back_left: 0.1
+      arm_back_right: 0.1
+  offset:
+      arm_front_left: 0
+      arm_front_right: 0
+      arm_back_left: 0
+      arm_back_right: 0
+

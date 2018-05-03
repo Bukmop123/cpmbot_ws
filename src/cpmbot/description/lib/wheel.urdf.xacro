@@ -1,0 +1,23 @@
+<?xml version='1.0'?>
+<robot name="cpmbot"
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="wheel" params="name radius heigth">
+        <!--xacro:property name="wheel_origin_angle" value="0 1.5707 1.5707"/-->
+        <link name="${name}">
+            <visual>
+                <origin xyz="${wheel_origin_position}" rpy="${wheel_origin_angle}"/>
+                <geometry>
+                    <cylinder radius="${radius}" length="${heigth}"/>
+                </geometry>
+                <material name="blue"/>
+            </visual>
+            <collision>
+                <origin xyz="${wheel_origin_position}" rpy="${wheel_origin_angle}"/>
+                <geometry>
+                    <cylinder radius="${radius}" length="${heigth}"/>
+                </geometry>
+            </collision>
+            <xacro:default_inertial_cilinder mass="${wheel_mass}" r="${radius}" h="${heigth}" origin_xyz="${wheel_origin_position}" origin_rpy="${wheel_origin_angle}"/>
+        </link>
+    </xacro:macro>
+</robot>

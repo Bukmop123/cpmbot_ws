@@ -1,0 +1,54 @@
+<?xml version='1.0'?>
+
+<robot name="cpmbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<!-- variables and arguments-->
+   <xacro:arg name="base_wheel_enabled" default="true" />
+   <xacro:arg name="arms_enabled" default="true" />
+   <xacro:arg name="arms_wheels_enabled" default="true" />
+   <xacro:arg name="arms_mecanum_wheels_enabled" default="true" />
+   <xacro:arg name="kinect_enabled" default="true" />
+   <xacro:arg name="robotic_arm_enabled" default="false" />
+   <xacro:arg name="gazebo_enabled" default="true" />
+
+   <xacro:property name="M_PI" value="3.14159"/>
+
+<!-- templates for the robot -->
+   <xacro:include filename="$(find cpmbot)/description/robot/defaults.xacro" /> 
+   <xacro:include filename="$(find cpmbot)/description/lib/inertia.xacro" /> 
+   <xacro:include filename="$(find cpmbot)/description/lib/track_simulator.urdf.xacro" />
+   <xacro:include filename="$(find cpmbot)/description/lib/wheel.urdf.xacro" />
+   <xacro:include filename="$(find cpmbot)/description/lib/wheel_with_joint.urdf.xacro" />
+   <xacro:include filename="$(find cpmbot)/description/lib/mecanum_wheel.urdf.xacro" />
+   <xacro:include filename="$(find cpmbot)/description/lib/mecanum_wheel_with_joint.urdf.xacro" />
+   <xacro:include filename="$(find cpmbot)/description/lib/arm.urdf.xacro" />
+   <xacro:include filename="$(find cpmbot)/description/lib/materials.xacro" />
+<!-- content of the robot -->
+   <xacro:macro name="cpmbot">
+      <xacro:include filename="$(find cpmbot)/description/robot/base_link.xacro" />
+      <xacro:if value="$(arg gazebo_enabled)">
+            <xacro:include filename="$(find cpmbot)/description/gazebo/base_link.gazebo" />
+      </xacro:if> 
+      <xacro:if value="$(arg kinect_enabled)">
+         <xacro:include filename="$(find cpmbot)/description/robot/kinect.urdf.xacro" />
+         <xacro:if value="$(arg gazebo_enabled)">
+            <xacro:include filename="$(find cpmbot)/description/gazebo/kinect.gazebo.xacro" />
+            <xacro:kinect_camera_gazebo prefix="camera"/>
+         </xacro:if>
+      </xacro:if>
+      <xacro:if value="$(arg base_wheel_enabled)">
+         <xacro:include filename="$(find cpmbot)/description/robot/base_wheel.urdf.xacro" />
+      </xacro:if>
+      <xacro:if value="$(arg arms_enabled)">
+         <xacro:include filename="$(find cpmbot)/description/robot/arms.urdf.xacro" />
+      </xacro:if>
+      <xacro:if value="$(arg robotic_arm_enabled)">
+         <xacro:include filename="$(find cpmbot)/description/robot/robotic_arm.urdf.xacro" />
+      </xacro:if>
+      <xacro:if value="$(arg gazebo_enabled)">
+         <xacro:include filename="$(find cpmbot)/description/gazebo/control.gazebo" />
+	 <xacro:include filename="$(find cpmbot)/description/gazebo/imu.gazebo" />
+      </xacro:if>
+   </xacro:macro>
+
+   <xacro:cpmbot />
+</robot>

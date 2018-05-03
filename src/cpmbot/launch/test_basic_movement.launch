@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+     
+
+<!-- joy node -->
+<node respawn="true" pkg="joy" type="joy_node" name="joy_node" >
+  <param name="dev" type="string" value="/dev/input/js0" />
+  <param name="deadzone" value="0.12" />
+</node>
+
+
+<!-- Load joystick and operator configurations from YAML file to parameter server -->
+<rosparam file="$(find cpmbot)/config/operator.yaml" command="load"/>
+<node pkg="cpmbot" name="operator_node" type="operator_node"/>
+
+<!-- Load joystick and operator configurations from YAML file to parameter server -->
+<rosparam file="$(find cpmbot)/config/basic_movement.yaml" command="load"/>
+<node pkg="cpmbot" name="basic_movement_node" type="basic_movement_node"/>
+
+</launch>

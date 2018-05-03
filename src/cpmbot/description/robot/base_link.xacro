@@ -1,0 +1,29 @@
+<?xml version='1.0'?>
+<robot name="cpmbot"
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <!-- base_link -->
+    <link name='base_link'>
+        <xacro:default_inertial_cube mass="${base_link_mass}" 
+    	x="${base_link_x}"
+    	y="${base_link_y}"
+    	z="${base_link_z}"
+    	origin_xyz="${base_origin_xyz}"
+    	origin_rpy="${base_origin_rpy}"></xacro:default_inertial_cube>
+        <collision>
+            <origin xyz="${base_origin_xyz}" rpy=" ${base_origin_rpy}"/>
+            <geometry>
+                <box size="${base_link_x} ${base_link_y} ${base_link_z}"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="${base_origin_xyz}" rpy=" ${base_origin_rpy}"/>
+            <geometry>
+                <box size="${base_link_x} ${base_link_y} ${base_link_z}"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+        <!--
+    <xacro:base_link_track_simulator sizeXYZ="${base_link_x} ${base_link_y} 0.1" originXYZ="0 0 -1"></xacro:base_link_track_simulator>
+    -->
+    </link>
+</robot>

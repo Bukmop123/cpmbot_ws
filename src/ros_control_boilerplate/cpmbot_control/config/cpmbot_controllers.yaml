@@ -1,0 +1,25 @@
+# ros_control_boilerplate Settings -----------------------
+# Settings for ros_control control loop
+generic_hw_control_loop:
+  loop_hz: 30
+  cycle_time_error_threshold: 0.1
+
+# Settings for ros_control hardware interface
+hardware_interface:
+   joints:
+       - arm_front_left_joint
+
+# Publish all joint states ----------------------------------
+# Creates the /joint_states topic necessary in ROS
+joint_state_controller:
+   type:         joint_state_controller/JointStateController
+   publish_rate: 50
+
+
+# Individual Position Controllers ---------------------------------------
+# Allows to send individual ROS msg of Float64 to each joint separately
+arm_joint1_pc:
+   type: effort_controllers/JointPositionController
+   joint: arm_front_left_joint
+   pid: {p: 255.0, i: 0.00, d: 00.0}
+

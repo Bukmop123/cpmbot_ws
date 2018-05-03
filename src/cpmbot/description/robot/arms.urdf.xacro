@@ -1,0 +1,10 @@
+<?xml version='1.0'?>
+
+<robot name="cpmbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:arm parent_name="${base_link_name}" front="1" left="1"></xacro:arm>
+	<xacro:arm parent_name="${base_link_name}" front="1" left="0"></xacro:arm>
+	<xacro:arm parent_name="${base_link_name}" front="0" left="1"></xacro:arm>
+	<xacro:arm parent_name="${base_link_name}" front="0" left="0"></xacro:arm>
+	
+</robot>

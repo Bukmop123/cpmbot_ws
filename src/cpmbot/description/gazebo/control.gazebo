@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot>
+
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>controller</robotNamespace>
+  </plugin>
+</gazebo>
+  <gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <legacyMode>false</legacyMode>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>10</updateRate>
+      <leftJoint>base_link_left_joint</leftJoint>
+      <rightJoint>base_link_right_joint</rightJoint>
+      <wheelSeparation>0.4</wheelSeparation>
+      <wheelDiameter>0.08</wheelDiameter>
+      <wheelTorque>20</wheelTorque>
+      <commandTopic>controller/base_link/command</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_link</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+  
+</robot>
+
+

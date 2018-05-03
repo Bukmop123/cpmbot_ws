@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- GDB functionality -->
+  <arg name="debug" default="false" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
+
+  <!-- Load example URDF -->
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find cpmbot)/description/cpmbot.xacro'" />
+
+  <node pkg="rosserial_python" type="serial_node.py" name="hardwareArduino">
+<param name="port" value="/dev/ttyACM0"/>
+    <param name="baud" value="57600"/>
+  </node>
+
+
+  <!--group ns="hardware"-->
+     <!-- joy node -->
+  	<node respawn="true" pkg="joy"
+       	 		type="joy_node" name="NGS_joystick" >
+    		<param name="dev" type="string" value="/dev/input/js0" />
+    		<param name="deadzone" value="0.12" />
+  	</node>
+
+<!-- operator commands -->
+<param name="multiplicate_commands" value="true" />
+<param name="axe_command_1" value="1" />
+<param name="controller_command_topic_1" value="/arm_joint1_pc/command" />
+<param name="command1_multiplicator" value="1.5707963268" />
+    <node pkg="operator_input" name="operator_cmds_node" type="operator_cmds_node"/>
+
+<param name="joint1_model_number" value="0" />  
+<param name="hw_topic_joint1_cmd" value="hardware/joint1/command" />
+<param name="hw_topic_joint1_fb" value="hardware/joint1/feedback" />
+    <!-- Load hardware interface -->
+    <node name="cpmbot_hardware_interface" pkg="ros_control_boilerplate" type="cpmbot_hw_main"
+          output="screen" launch-prefix="$(arg launch_prefix)">
+</node>
+
+
+    <!-- Load controller settings -->
+    <rosparam file="$(find ros_control_boilerplate)/cpmbot_control/config/cpmbot_controllers.yaml" command="load"/>
+
+    <!-- Load controller manager -->
+    <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
+	  output="screen" args="spawn joint_state_controller 
+arm_joint1_pc" />
+
+    <!-- Convert joint states to /tf tranforms -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <!--/group-->
+
+</launch>

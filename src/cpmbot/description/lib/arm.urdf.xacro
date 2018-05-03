@@ -1,0 +1,70 @@
+<?xml version='1.0'?>
+
+<robot name="cpmbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+		
+	<xacro:macro name="arm" params="parent_name front left">
+		<!-- internal variables-->
+		<xacro:property name="name_front" value="back"/>
+		<xacro:property name="name_side" value="right"/>
+		<xacro:property name="reflect_front" value="-1"/>
+		<xacro:property name="reflect_side" value="-1"/>
+		<!-- evaluation -->
+		<xacro:if value="${front}">
+			<xacro:property name="name_front" value="front"/>
+			<xacro:property name="reflect_front" value="1"/>			
+		</xacro:if>
+		
+		<xacro:if value="${left}">
+			<xacro:property name="name_side" value="left"/>
+			<xacro:property name="reflect_side" value="1"/>			
+		</xacro:if>
+		<!-- elements  -->
+		<link name="arm_${name_front}_${name_side}">
+		<visual>
+			<origin xyz="${reflect_front*arm_size_x/2} 0 0" rpy="0 0 0"/>
+			<geometry>
+			 	<box size="${arm_size_x} ${arm_size_y} ${arm_size_z}"/>
+			</geometry>
+			<material name="blue"/>
+		</visual>
+		<collision>
+			<origin xyz="${reflect_front*arm_size_x/2} 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="${arm_size_x} ${arm_size_y} ${arm_size_z}"/>
+			</geometry>
+		</collision>
+		<xacro:default_inertial_cube mass="5" x="${arm_size_x}" y="${arm_size_y}" z="${arm_size_z}" origin_xyz="${reflect_front*arm_size_x/2} 0 0" origin_rpy="0 0 0"/>
+		</link>
+		
+		<joint type="continuous" name="arm_${name_front}_${name_side}_joint">
+			<origin xyz="${reflect_front*(base_link_x/2+arm_joint_offset_x)} ${reflect_side*(base_link_y/2+arm_joint_offset_y)} 0" rpy="0 0 0"/>
+			<child link="arm_${name_front}_${name_side}"/>
+			<parent link="${parent_name}"/>
+			<axis xyz="0 1 0" rpy="0 0 0"/>
+			<limit effort="100" velocity="100"/>
+			<joint_properties damping="0.0" friction="0.0"/>
+		</joint>		
+		<transmission name="arm_${name_front}_${name_side}_joint_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="arm_${name_front}_${name_side}_joint">
+				<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="arm_${name_front}_${name_side}_joint_motor">
+				<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+		<!-- Normal Wheel -->
+		<xacro:if value="$(arg arms_wheels_enabled)">
+			<!--<xacro:wheel_with_joint parent_name="arm_${name_front}_${name_side}" left="${left}" radius="${wheel_radius}" heigth="${wheel_heigth}" jointX="${reflect_front*(arm_size_x+arm_wheel_offset_x)}" jointY="${arm_size_y+arm_wheel_offset_y}" jointZ="0">
+			</xacro:wheel_with_joint>-->
+			<xacro:wheel_with_joint parent_name="arm_${name_front}_${name_side}" pre_name="track" frontal_name="${name_front}" left="${left}" radius="${wheel_radius}" heigth="${wheel_heigth}" jointX="${reflect_front*(arm_size_x+arm_wheel_offset_x)}" jointY="${arm_size_y+arm_wheel_offset_y}" jointZ="0">
+			</xacro:wheel_with_joint>
+		</xacro:if>
+		<!-- Mecanum Wheel -->
+		<xacro:if value="$(arg arms_mecanum_wheels_enabled)">
+			<xacro:mecanum_wheel_with_joint parent_name="arm_${name_front}_${name_side}" pre_name="mecanum" frontal_name="${name_front}" left="${left}" radius="${mecanum_wheel_radius}" jointX="${reflect_front*(arm_size_x+arm_mecanum_wheel_offset_x)}" jointY="${arm_size_y+arm_mecanum_wheel_offset_y}" jointZ="${arm_mecanum_wheel_offset_z}">
+			</xacro:mecanum_wheel_with_joint>
+		</xacro:if>
+	</xacro:macro>
+</robot>

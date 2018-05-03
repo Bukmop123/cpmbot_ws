@@ -1,0 +1,30 @@
+#basic movement node parameter
+
+
+topic:
+  subscriber:
+    basic_command: robot/basic/command
+  publisher:
+    base_link_command: controller/base_link/command
+    detail_command: robot/detail/command
+    arm:
+      front_left_command: controller/arm_front_left/command
+      front_right_command: controller/arm_front_right/command
+      back_left_command: controller/arm_back_left/command
+      back_right_command: controller/arm_back_right/command
+    mecanum:
+      front_left_command: controller/track_front_left/command
+      front_right_command: controller/track_front_right/command
+      back_left_command: controller/track_back_left/command
+      back_right_command: controller/track_back_right/command
+
+
+parameter:
+  hardware:
+    wheel_radius: 0.04
+    robot_center_to_wheel_width: 0.5
+    robot_center_to_wheel_length: 0.5
+
+
+basic_movement:
+  cycle_time: 0.1

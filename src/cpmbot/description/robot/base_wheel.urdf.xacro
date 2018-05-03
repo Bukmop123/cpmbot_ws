@@ -1,0 +1,6 @@
+<?xml version='1.0'?>
+<robot name="cpmbot"
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:wheel_with_joint parent_name="${base_link_name}" pre_name="base" frontal_name="link" left="1" radius="${wheel_radius}" heigth="${wheel_heigth}" jointX="${base_link_wheel_offset_x}" jointY="${base_link_y/2+base_link_wheel_offset_y}" jointZ="${base_link_wheel_offset_z}"></xacro:wheel_with_joint>
+    <xacro:wheel_with_joint parent_name="${base_link_name}" pre_name="base" frontal_name="link" left="0" radius="${wheel_radius}" heigth="${wheel_heigth}" jointX="${base_link_wheel_offset_x}" jointY="${base_link_y/2+base_link_wheel_offset_y}" jointZ="${base_link_wheel_offset_z}"></xacro:wheel_with_joint>
+</robot>

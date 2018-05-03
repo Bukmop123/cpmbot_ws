@@ -1,0 +1,23 @@
+<?xml version='1.0'?>
+
+<robot name="cpmbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:macro name="mecanum_wheel" params="name radius origin_angle">
+	<!--xacro:property name="wheel_origin_angle" value="0 1.5707 1.5707"/-->
+	<link name="${name}">
+	<visual>
+		<origin xyz="${mecanum_wheel_origin_position}" rpy="${origin_angle}"/>
+		<geometry>
+			<sphere radius="${radius}"/>
+		</geometry>
+		<material name="blue"/>
+	</visual>
+	<collision>
+		<origin xyz="${mecanum_wheel_origin_position}" rpy="${origin_angle}"/>
+		<geometry>
+			<sphere radius="${radius}"/>
+		</geometry>
+	</collision>
+	<xacro:default_inertial_sphere mass="${mecanum_wheel_mass}" r="${radius}" origin_xyz="${mecanum_wheel_origin_position}" origin_rpy="${origin_angle}"/>
+	</link>
+	</xacro:macro>
+</robot>

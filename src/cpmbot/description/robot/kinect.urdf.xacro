@@ -1,0 +1,42 @@
+<?xml version='1.0'?>
+
+<robot name="mybot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:macro name="kinect_camera" params="prefix:=camera">
+    <!-- Create kinect reference frame -->
+    <!-- Add mesh for kinect -->
+    <link name="${prefix}_link">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <!--<mesh filename="package://cpmbot/description/meshes/kinect.dae" />-->
+	       <box size="0.07 0.3 0.09"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.07 0.3 0.09"/>
+        </geometry>
+      </collision>
+    </link>
+
+
+  <link name="${prefix}_frame_optical"/>
+  <joint name="${prefix}_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
+    <parent link="${prefix}_link"/>
+    <child link="${prefix}_frame_optical"/>
+  </joint>
+
+      <joint name="kinect_frame_joint" type="fixed">
+        <origin xyz="${kinect_joint_offset_x} ${kinect_joint_offset_y} ${kinect_joint_offset_z}" rpy="0 0 0" />
+      
+	<parent link="${base_link_name}"/> 
+        <child link="camera_link"/>
+      </joint>
+</xacro:macro>
+
+<xacro:kinect_camera prefix="camera"/>
+</robot>
+

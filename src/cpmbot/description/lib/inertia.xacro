@@ -1,0 +1,59 @@
+<?xml version='1.0'?>
+
+ <robot name="cpmbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:macro name="default_inertial" params="mass">
+	<inertial>
+		<origin xyz="0 0 0" rpy="0 1.5707 1.5707"/> 
+		<mass value="${mass}" />
+		<inertia ixx="0.1" ixy="0.0" ixz="0.0"
+			 iyy="0.1" iyz="0.0" izz="0.1" />
+	</inertial>
+	</xacro:macro>
+
+	<xacro:macro name="default_inertial_cube" params="mass x y z origin_xyz origin_rpy">
+
+		<inertial>
+
+			<origin xyz="${origin_xyz}" rpy="${origin_rpy}"/> 
+
+			<mass value="${mass}" />
+
+			<inertia ixx="${1/12*mass*(z*z+x*x)}" ixy="0.0" ixz="0.0"
+
+				 iyy="${1/12*mass*(y*y+x*x)}" iyz="0.0" izz="${1/12*mass*(y*y+z*z)}" />
+
+		</inertial>
+
+ 	</xacro:macro>
+
+
+	<xacro:macro name="default_inertial_sphere" params="mass r origin_xyz origin_rpy">
+
+		<inertial>
+
+			<origin xyz="${origin_xyz}" rpy="${origin_rpy}"/> 
+
+			<mass value="${mass}" />
+
+			<inertia ixx="${2/5*mass*(r*r)}" ixy="0.0" ixz="0.0"
+
+				 iyy="${2/5*mass*(r*r)}" iyz="0.0" izz="${2/5*mass*(r*r)}" />
+
+		</inertial>
+
+ 	</xacro:macro>
+
+	
+
+	<xacro:macro name="default_inertial_cilinder" params="mass r h origin_xyz origin_rpy">
+    <inertial>
+        <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
+        <mass value="${mass}" />
+        <inertia ixx="${1/2*mass*((3*r*r)+(h*h))}" ixy="0.0" ixz="0.0"
+
+				 iyy="${1/2*mass*((3*r*r)+(h*h))}" iyz="0.0" izz="${1/2*mass*(r*r)}" />
+    </inertial>
+</xacro:macro>
+
+ </robot>
